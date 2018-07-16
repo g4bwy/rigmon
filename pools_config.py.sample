@@ -1,0 +1,19 @@
+pools = {
+        'ovh': {
+            'username': 'XXXXXX PUT YOUR USERNAME HERE XXXXXX',
+            'base_url': 'https://vrm.mining-pool.ovh/index.php',
+            'api_uid': 'XXXXXX PUT YOUR API UID NUMBER HERE XXXXXX',
+            'api_key': 'XXXXXX PUT YOUR API KEY HERE XXXXXX',
+            'hashfactor': 60.0 * 1000.0,
+            'sharefactor': 60,
+        },
+        'n3rd3d': {
+            'username': 'XXXXXX PUT YOUR USERNAME HERE XXXXXX',
+            'base_url': 'https://vrm.n3rd3d.com/index.php',
+            'api_uid': 'XXXXXX PUT YOUR API UID NUMBER HERE XXXXXX',
+            'api_key': 'XXXXXX PUT YOUR API KEY HERE XXXXXX',
+            'hashfactor': 1,
+            'sharefactor': 1,
+        }
+}
+

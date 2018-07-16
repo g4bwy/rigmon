@@ -1,0 +1,30 @@
+def group1_cost(num_workers):
+    return 0
+
+def group2_cost(num_workers):
+    return 0
+
+groups = {
+        "group1": {
+            "cost": group1_cost,
+            "workers": (
+                "worker1",
+                "worker2",
+                "worker3",
+                "worker4",
+                "worker5"
+            )
+        },
+
+        "group2": {
+            "cost": group2_cost,
+            "workers": (
+                "worker6",
+                "worker7",
+                "worker8",
+                "worker9",
+                "worker10"
+            )
+        },
+}
+

@@ -24,3 +24,9 @@ and all declared workers within that group must use that same worker name.
 
 The 'cost' function can optionally be used to compute power/cost consumption for a given worker group, based on a single unit's cost or power consumption (if you don't want to worry about that, just use a function that returns 0).
 
+
+# Run
+
+    python ./monitor.py <pool name>
+
+

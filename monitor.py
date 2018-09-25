@@ -93,6 +93,7 @@ class WorkerGroup(object):
     def update(self):
         reachable = 0
         hashrate = 0.0
+        sharerate = 0.0
         accepted = 0
         rejected = 0
 
@@ -101,11 +102,13 @@ class WorkerGroup(object):
             if w.reachable:
                 reachable = reachable + 1
             hashrate = hashrate + w.hashrate
+            sharerate = sharerate + w.sharerate
             accepted = accepted + w.accepted
             rejected = rejected + w.rejected
 
         self.reachable = reachable
         self.real_hashrate = hashrate
+        self.sharerate = sharerate
         self.accepted = accepted
         self.rejected = rejected
 
@@ -138,8 +141,8 @@ class WorkerGroup(object):
         except:
             avg_wk_hashrate = 0.0
 
-        return "| %-*s | %9.3f | %9.3f | %s%7.3f%%\033[0m (%s%7.3f%%\033[0m) | %2u /%2u  | %8.3f | %6u | %6u | %s%7.3f%%\033[0m | %.4f" % \
-                (10, self.name, self.real_hashrate, self.pool_hashrate, effcolor(hr_eff), hr_eff, effcolor(avg_hr_eff), avg_hr_eff, \
+        return "| %-*s | %9.3f | %9.3f | %7.3f | %s%7.3f%%\033[0m (%s%7.3f%%\033[0m) | %2u /%2u  | %8.3f | %6u | %6u | %s%7.3f%%\033[0m | %.4f" % \
+                (10, self.name, self.real_hashrate, self.pool_hashrate, self.sharerate, effcolor(hr_eff), hr_eff, effcolor(avg_hr_eff), avg_hr_eff, \
                 self.reachable, len(self.workers), avg_wk_hashrate,
                 self.accepted, self.rejected, effcolor(sh_eff), sh_eff, cost_per_hm_month)
 
@@ -164,6 +167,7 @@ if __name__ == "__main__":
 
         real_total = 0.0
         pool_total = 0.0
+        total_sharerate = 0.0
         total_reachable = 0
         total_workers = 0
         total_accepted = 0
@@ -172,13 +176,14 @@ if __name__ == "__main__":
         lines = [ "\033[2J\033[;H" ]
 
         lines.append("----------------------------------------------------------------------------------------------------------------------")
-        lines.append("|    name    | miner H/m | pool H/m  |     eff (+avg)      |   wks   |  H/m/wk  | accept | reject |    eff   |  cost")
+        lines.append("|    name    | miner H/m | pool H/m  |   S/m   |     eff (+avg)      |   wks   |  H/m/wk  | accept | reject |    eff   |  cost")
         lines.append("----------------------------------------------------------------------------------------------------------------------")
         for wkg in wkgs:
             wkg.update()
             lines.append(wkg.show())
             real_total = real_total + wkg.real_hashrate
             pool_total = pool_total + wkg.pool_hashrate
+            total_sharerate = total_sharerate + wkg.sharerate
             total_reachable = total_reachable + wkg.reachable
             total_workers = total_workers + len(wkg.workers)
             total_accepted = total_accepted + wkg.accepted
@@ -199,8 +204,8 @@ if __name__ == "__main__":
         avg_hr_eff = total_hr_eff / rounds
 
         lines.append("---------------------------------------------------------------------------------------------------------------------")
-        lines.append("| %-*s | %-9.3f | %-9.3f | %s%7.3f%%\033[0m (%s%7.3f%%\033[0m) |  %2u/%2u  | %8.3f | %6u | %6u | %s%7.3f%%\033[0m" % \
-                    (10, "total", real_total, pool_total, effcolor(hr_eff), hr_eff, effcolor(avg_hr_eff), avg_hr_eff, \
+        lines.append("| %-*s | %-9.3f | %-9.3f | %-7.3f | %s%7.3f%%\033[0m (%s%7.3f%%\033[0m) |  %2u/%2u  | %8.3f | %6u | %6u | %s%7.3f%%\033[0m" % \
+                    (10, "total", real_total, pool_total, total_sharerate, effcolor(hr_eff), hr_eff, effcolor(avg_hr_eff), avg_hr_eff, \
                     total_reachable, total_workers, real_total / total_workers, total_accepted, total_rejected, effcolor(sh_eff), sh_eff))
 
         for l in lines:
